@@ -1,7 +1,6 @@
 {
   "name": "my-app",
   "scripts": {
-    "install": "bun install",
     "dev": "bun run --hot src/index.ts",
     "build": "bun-vercel ./src/index.ts"
   },
