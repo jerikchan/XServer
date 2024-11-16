@@ -1,7 +1,8 @@
 {
   "name": "x-server",
   "scripts": {
-    "dev": "bun run --hot ./src/main.ts"
+    "dev": "bun run --hot ./src/main.ts",
+    "build": "bun-vercel ./src/main.ts"
   },
   "dependencies": {
     "@biconomy/sdk": "^0.0.10",
@@ -13,6 +14,7 @@
     "viem": "^2.21.45"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "bun-vercel": "^1.0.0-alpha.5"
   }
 }
