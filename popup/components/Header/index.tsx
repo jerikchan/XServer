@@ -1,6 +1,5 @@
 import cn from 'classnames';
-import matic from 'data-base64:~popup/assets/svg/matic.png';
-import { useCallback, useContext } from 'react';
+import { useState, useCallback, useContext } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '~components/ui/button';
@@ -9,12 +8,31 @@ import { useConfigStore } from '~popup/store';
 import { addressFormat } from '~popup/utils';
 import { TwitterName } from './TwitterName';
 
+// import matic from 'data-base64:~popup/assets/svg/matic.png';
+// polygon
+import pol from 'data-base64:~popup/assets/svg/logo/pol.svg';
+// arbitrum
+import arb from 'data-base64:~popup/assets/svg/logo/arbi.svg';
+// base
+import base from 'data-base64:~popup/assets/svg/logo/base.svg';
+// ethereum
+import eth from 'data-base64:~popup/assets/svg/logo/eth.svg';
+
+const chains = [
+  { id: 'polygon', icon: pol, name: 'Polygon' },
+  { id: 'arbitrum', icon: arb, name: 'Arbitrum' },
+  { id: 'base', icon: base, name: 'Base' },
+  { id: 'ethereum', icon: eth, name: 'Ethereum' }
+];
+
 export default function Header() {
   const { isShowMoney, setIsShowMoney } = useConfigStore();
   const { userInfo, ethBalance, usdtBalance } = useContext(
     XWalletProviderContext
   );
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedChain, setSelectedChain] = useState(chains[0]);
 
   const handleShowMoney = useCallback(() => {
     setIsShowMoney();
@@ -28,9 +46,13 @@ export default function Header() {
     navigate('/send?token=matic');
   }, []);
 
+  const toggleDropdown = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
   return (
-    <div className="py-3 px-7 bg-white rounded-t-2xl">
-      <div className="flex justify-between items-center mb-5">
+    <div className="py-3 bg-white px-7 rounded-t-2xl">
+      <div className="flex items-center justify-between mb-5">
         <TwitterName handle={userInfo?.username ?? 'User'} />
         <div className="flex items-center ">
           <Button
@@ -43,7 +65,37 @@ export default function Header() {
           >
             Send
           </Button>
-          <img src={matic} className="w-8 h-8 object-contain"></img>
+          <div className="relative">
+            <button 
+              onClick={toggleDropdown}
+              className="flex items-center space-x-1 hover:opacity-80"
+            >
+              <img src={selectedChain.icon} className="object-contain w-8 h-8" alt={selectedChain.name} />
+              <svg className={`w-4 h-4 transition-transform text-white dark:text-black ${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+              </svg>
+            </button>
+            
+            {isOpen && (
+              <div className="absolute right-0 z-10 w-48 mt-2 overflow-hidden origin-top-right bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="py-1">
+                  {chains.map((chain) => (
+                    <button
+                      key={chain.id}
+                      onClick={() => {
+                        setSelectedChain(chain);
+                        setIsOpen(false);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <img src={chain.icon} className="w-6 h-6 mr-2" alt={chain.name} />
+                      <span>{chain.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="flex justify-between">
@@ -121,7 +173,7 @@ export default function Header() {
           )}
         </div>
       </div>
-      <div className="text-3xl font-semibold mt-5 mb-6">
+      <div className="mt-5 mb-6 text-3xl font-semibold">
         {isShowMoney
           ? `$ ${(Number(ethBalance) * 0.9 + Number(usdtBalance)).toFixed(5)}`
           : '**********'}
