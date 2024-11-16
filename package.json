@@ -3,7 +3,7 @@
   "scripts": {
     "install": "bun install",
     "dev": "bun run --hot src/index.ts",
-    "start": "bun run src/index.ts"
+    "build": "bun-vercel ./src/index.ts"
   },
   "dependencies": {
     "@biconomy/sdk": "^0.0.10",
@@ -15,6 +15,7 @@
     "viem": "^2.21.45"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "bun-vercel": "^1.0.0-alpha.4"
   }
 }
