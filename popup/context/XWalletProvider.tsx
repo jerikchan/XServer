@@ -56,14 +56,14 @@ export interface TxRecord {
 
 const chainConfig = {
   chainNamespace: 'eip155',
-  chainId: '0x13881', // hex of 80001, polygon testnet
-  rpcTarget: 'https://rpc.ankr.com/polygon_mumbai',
+  chainId: '0x13882', // hex of 80001, polygon testnet
+  rpcTarget: 'https://rpc.ankr.com/polygon_amoy',
   // Avoid using public rpcTarget in production.
   // Use services like Infura, Quicknode etc
-  displayName: 'Polygon Mumbai Testnet',
-  blockExplorer: 'https://mumbai.polygonscan.com/',
-  ticker: 'MATIC',
-  tickerName: 'Matic',
+  displayName: 'Polygon Amoy Testnet',
+  blockExplorer: 'https://amoy.polygonscan.com/',
+  ticker: 'POL',
+  tickerName: 'Polygon Ecosystem Token',
 };
 
 export function XWalletProvider({ children }) {
@@ -84,7 +84,7 @@ export function XWalletProvider({ children }) {
       try {
         const web3auth = new Web3AuthNoModal({
           clientId:
-            'BOivvSV9qNyyA1xJwzfI8pM9dPedtzreVWjHVNa76DSSO_RZN_SnZO1MxcumIJduaDQxj11ISSvg-B0cvdLxWEA-5iKDKygC-li7pCoh1coRTTi8',
+            'BI0ucyGDGEjuT7yJq5xe_fZBT825nYnZ70Ky-D11Y3AdijGZzkx6XY1Vwv1zjC_cOYgrKCe3cN9GD28m7yC0bG8',
           web3AuthNetwork: 'sapphire_devnet',
           // @ts-ignore
           chainConfig,
