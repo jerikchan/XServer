@@ -40,10 +40,12 @@ function ConvertToBn(handle: string) {
 
 app.post('/deploy', (c) => {
   return c.json({ address: getNexusAddress("111") })
+  // TODO: 组 deploy , 发一笔空交易（或 changeOwner）
 })
 
 app.post('/changeOwner',  (c) => {
   return c.json({ address: getNexusAddress("111") })
+  // TODO: 组 changeOwner 的逻辑
 })
 
 
