@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { privateKeyToAccount } from "viem/accounts";
 import { createNexusClient } from "@biconomy/sdk"; 
-import { polygonAmoy } from "viem/chains"; 
+import { baseSepolia } from "viem/chains"; 
 import { http, parseEther } from "viem"; 
 
 const app = new Hono()
@@ -17,22 +17,33 @@ const bundlerUrl = "https://bundler.biconomy.io/api/v3/84532/nJPK7B3ru.dd7f7861-
 app.get('/address/:handle', async (c) => {
   const handle = c.req.param("handle")
 
-  const nexusClient = await createNexusClient({ 
-    signer: account, 
-    chain: polygonAmoy, 
-    transport: http(), 
-    bundlerTransport: http(bundlerUrl), 
-});
-const smartAccountAddress = await nexusClient.account.address; 
+  return c.json({ address: await getNexusAddress(handle)
   // return c.json({ address: handle })
 })
 
+async function getNexusAddress(handle: string) {
+  let index = ConvertToBn(handle)
+  const nexusClient = await createNexusClient({ 
+    signer: account, 
+    chain: baseSepolia, 
+    transport: http(), 
+    index: index,
+    bundlerTransport: http(bundlerUrl), 
+  });
+  // const smartAccountAddress = 
+  return await nexusClient.account.address; 
+}
+
+function ConvertToBn(handle: string) {
+  return BigInt(handle)
+}
+
 app.post('/deploy', (c) => {
-  
+  return c.json({ address: getNexusAddress("111") })
 })
 
 app.post('/changeOwner',  (c) => {
-
+  return c.json({ address: getNexusAddress("111") })
 })
 
 
