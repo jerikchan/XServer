@@ -84,7 +84,7 @@ export function XWalletProvider({ children }) {
       try {
         const web3auth = new Web3AuthNoModal({
           clientId:
-            'BIwT5GCxEqEm6Nm6_DtLcl3IMdR2SmqJJNUYhBX2v3J_vCIlyBCjokH5vD_95_-5iKDKygC-li7pCoh1coRTTi8',
+            'BOivvSV9qNyyA1xJwzfI8pM9dPedtzreVWjHVNa76DSSO_RZN_SnZO1MxcumIJduaDQxj11ISSvg-B0cvdLxWEA-5iKDKygC-li7pCoh1coRTTi8',
           web3AuthNetwork: 'sapphire_devnet',
           // @ts-ignore
           chainConfig,
