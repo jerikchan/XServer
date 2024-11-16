@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { createBicoPaymasterClient, createNexusClient } from "@biconomy/sdk"; 
 import { baseSepolia } from "viem/chains"; 
-import { encodeFunctionData, http, parseAbi, parseEther } from "viem"; 
+import { createPublicClient, encodeFunctionData, http, parseAbi, parseEther } from "viem"; 
 // import { ENTRYPOINT_ADDRESS_V07 } from "permissionless"
 // import { KERNEL_V3_1 } from "@zerodev/sdk/constants"
  
@@ -25,6 +25,10 @@ const paymasterUrl = "https://paymaster.biconomy.io/api/v2/84532/F7wyL1clz.75a64
 
 const TRANSFER_OWNERSHIP_ABI = parseAbi([
   'function transferOwnership(address newOwner) external'
+])
+
+const SMART_ACCOUNT_OWNER_ABI = parseAbi([
+  'function smartAccountOwners(address account) view returns (address)'
 ])
 const K1_VALIDATOR_ADDRESS = '0x00000004171351c442B202678c48D8AB5B321E8f'
 
@@ -86,6 +90,26 @@ app.post('/deploy', async (c) => {
   const receipt = await nexusClient.waitForTransactionReceipt({ hash })
 
   return c.json({ address: await nexusClient.account.address, hash })
+})
+
+app.get('/owners/:account', async (c) => {
+  const account = c.req.param("account")
+
+  const publicClient = createPublicClient({ 
+    chain: baseSepolia,
+    transport: http()
+  })
+
+  const owners = await publicClient.call({
+    to: K1_VALIDATOR_ADDRESS,
+    data: encodeFunctionData({
+      abi: SMART_ACCOUNT_OWNER_ABI,
+      functionName: 'smartAccountOwners',
+      args: [account as `0x${string}`]
+    })
+  })
+
+  return c.json({ owners })
 })
 
 
