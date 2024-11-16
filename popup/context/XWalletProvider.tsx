@@ -5,6 +5,8 @@ import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider';
 import { Web3AuthNoModal } from '@web3auth/no-modal';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { ECDSAProvider, ERC20Abi, getRPCProviderOwner } from '@zerodev/sdk';
+// import { createBicoPaymasterClient, createNexusClient } from "@biconomy/sdk"; 
+
 import { Contract, JsonRpcProvider, id } from 'ethers';
 import { createContext, useCallback, useEffect, useState } from 'react';
 import {
@@ -66,7 +68,7 @@ const polygonConfig = {
 
 const baseConfig = {
   chainNamespace: 'eip155',
-  chainId: '84532', // hex of 80001, polygon testnet
+  chainId: '0x14a34', // hex of 80001, polygon testnet
   rpcTarget: 'https://rpc.ankr.com/base_sepolia',
   displayName: 'Base Sepolia Testnet',
   blockExplorer: 'https://sepolia.basescan.org',
