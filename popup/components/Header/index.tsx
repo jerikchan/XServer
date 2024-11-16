@@ -71,7 +71,7 @@ export default function Header() {
               className="flex items-center space-x-1 hover:opacity-80"
             >
               <img src={selectedChain.icon} className="object-contain w-8 h-8" alt={selectedChain.name} />
-              <svg className={`w-4 h-4 transition-transform text-white dark:text-black ${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24">
+              <svg className={`w-4 h-4 transition-transform text-black${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24">
                 <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
               </svg>
             </button>
