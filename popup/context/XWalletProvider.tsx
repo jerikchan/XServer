@@ -54,17 +54,27 @@ export interface TxRecord {
   hash: string;
 }
 
-const chainConfig = {
+const polygonConfig = {
   chainNamespace: 'eip155',
   chainId: '0x13882', // hex of 80001, polygon testnet
   rpcTarget: 'https://rpc.ankr.com/polygon_amoy',
-  // Avoid using public rpcTarget in production.
-  // Use services like Infura, Quicknode etc
   displayName: 'Polygon Amoy Testnet',
   blockExplorer: 'https://amoy.polygonscan.com/',
   ticker: 'POL',
   tickerName: 'Polygon Ecosystem Token',
 };
+
+const baseConfig = {
+  chainNamespace: 'eip155',
+  chainId: '84532', // hex of 80001, polygon testnet
+  rpcTarget: 'https://rpc.ankr.com/base_sepolia',
+  displayName: 'Base Sepolia Testnet',
+  blockExplorer: 'https://sepolia.basescan.org',
+  ticker: 'ETH',
+  tickerName: 'PA public testnet for Base.',
+};
+
+const chainConfig = baseConfig;
 
 export function XWalletProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
